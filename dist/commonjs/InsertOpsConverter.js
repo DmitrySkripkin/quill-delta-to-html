@@ -24,6 +24,9 @@ var InsertOpsConverter = (function () {
             if (!insertVal) {
                 continue;
             }
+            if (!op.attributes && op.insert.mention) {
+                op.attributes = op.insert.mention.attributes;
+            }
             attributes = OpAttributeSanitizer_1.OpAttributeSanitizer.sanitize(op.attributes);
             results.push(new DeltaInsertOp_1.DeltaInsertOp(insertVal, attributes));
         }

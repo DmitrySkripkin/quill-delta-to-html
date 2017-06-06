@@ -31,7 +31,9 @@ class InsertOpsConverter {
             if (!insertVal) {
                 continue;
             }
-
+            if (!op.attributes && op.insert.mention) {
+                op.attributes = op.insert.mention.attributes;
+            }
             attributes =  OpAttributeSanitizer.sanitize(op.attributes);
             
             results.push(new DeltaInsertOp(insertVal, attributes));
