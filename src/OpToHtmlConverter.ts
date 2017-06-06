@@ -136,6 +136,14 @@ class OpToHtmlConverter {
             );
         }
 
+        if (this.op.isMention()) {
+            return tagAttrs.concat(
+                makeAttr('allowfullscreen', 'true'),
+                makeAttr('src', (this.op.insert.value.id + '')._scrubUrl())
+                makeAttr('src', (this.op.insert.value.name + '')._scrubUrl())
+            );
+        }
+
         var styles = this.getCssStyles();
         var styleAttr = styles.length ? [makeAttr('style', styles.join(';'))] : [];
 

@@ -6,7 +6,10 @@ class InsertData {
     readonly value: string;
     constructor(type: DataType, value: string) {
         this.type = type;
-        this.value = value + '';
+     	if (Object(this.value))
+     		this.value = value;
+     	else
+        	this.value = value + '';
     }
 };
 
