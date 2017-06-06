@@ -74,6 +74,9 @@ var DeltaInsertOp = (function () {
     DeltaInsertOp.prototype.isLink = function () {
         return this.isText() && !!this.attributes.link;
     };
+    DeltaInsertOp.prototype.isMention = function () {
+        return !!this.attributes.name && !!this.attributes.id;
+    };
     return DeltaInsertOp;
 }());
 exports.DeltaInsertOp = DeltaInsertOp;

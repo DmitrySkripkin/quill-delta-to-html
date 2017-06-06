@@ -52,9 +52,11 @@ class InsertOpsConverter {
             new InsertData(DataType.Image, insertPropVal[DataType.Image])
             : DataType.Video in insertPropVal ?
                 new InsertData(DataType.Video, insertPropVal[DataType.Video])
-                : DataType.Formula in insertPropVal ?
-                    new InsertData(DataType.Formula, insertPropVal[DataType.Formula])
-                    : null;
+                    : DataType.Mention in insertPropVal ?
+                    new InsertData(DataType.Mention, insertPropVal[DataType.Mention])
+                        : DataType.Formula in insertPropVal ?
+                                new InsertData(DataType.Formula, insertPropVal[DataType.Formula])
+                                : null;
     }
 }
 

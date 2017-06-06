@@ -102,6 +102,10 @@ class DeltaInsertOp {
         return this.isText() && !!this.attributes.link;
     }
 
+    isMention() {
+        return !!this.attributes.name && !!this.attributes.id;
+    }
+
 }
 
 export { DeltaInsertOp }; 

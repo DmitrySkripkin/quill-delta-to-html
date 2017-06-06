@@ -14,7 +14,7 @@ class OpAttributeSanitizer {
         }
 
         let {
-            font, size, link, script, list, header, align, direction, indent
+            font, size, link, script, list, header, align, direction, indent, id, name
         } = dirtyAttrs;
 
         ['bold', 'italic', 'underline', 'strike', 'code', 'blockquote', 'code-block']
@@ -66,6 +66,14 @@ class OpAttributeSanitizer {
 
         if (indent && Number(indent)) {
             cleanAttrs.indent = Math.min(Number(indent), 30);
+        }
+
+        if (name && String(name)) {
+            cleanAttrs.name = name;
+        }
+
+        if (id && String(id)) {
+            cleanAttrs.id = id;
         }
 
         return cleanAttrs;

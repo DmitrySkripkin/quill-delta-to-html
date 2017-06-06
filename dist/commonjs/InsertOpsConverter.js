@@ -40,9 +40,11 @@ var InsertOpsConverter = (function () {
             new InsertData_1.InsertData(value_types_1.DataType.Image, insertPropVal[value_types_1.DataType.Image])
             : value_types_1.DataType.Video in insertPropVal ?
                 new InsertData_1.InsertData(value_types_1.DataType.Video, insertPropVal[value_types_1.DataType.Video])
-                : value_types_1.DataType.Formula in insertPropVal ?
-                    new InsertData_1.InsertData(value_types_1.DataType.Formula, insertPropVal[value_types_1.DataType.Formula])
-                    : null;
+                : value_types_1.DataType.Mention in insertPropVal ?
+                    new InsertData_1.InsertData(value_types_1.DataType.Mention, insertPropVal[value_types_1.DataType.Mention])
+                    : value_types_1.DataType.Formula in insertPropVal ?
+                        new InsertData_1.InsertData(value_types_1.DataType.Formula, insertPropVal[value_types_1.DataType.Formula])
+                        : null;
     };
     return InsertOpsConverter;
 }());

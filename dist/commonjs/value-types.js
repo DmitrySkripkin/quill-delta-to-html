@@ -25,13 +25,15 @@ var DataType = {
     Image: "image",
     Video: "video",
     Formula: "formula",
-    Text: "text"
+    Text: "text",
+    Mention: "mention"
 };
 exports.DataType = DataType;
 var GroupType = {
     Block: 'block',
     InlineGroup: 'inline-group',
     List: 'list',
-    Video: 'video'
+    Video: 'video',
+    Mention: "mention"
 };
 exports.GroupType = GroupType;

@@ -75,6 +75,9 @@ var DeltaInsertOp = (function () {
     DeltaInsertOp.prototype.isLink = function () {
         return this.isText() && !!this.attributes.link;
     };
+    DeltaInsertOp.prototype.isMention = function () {
+        return !!this.attributes.name && !!this.attributes.id;
+    };
     return DeltaInsertOp;
 }());
 exports.DeltaInsertOp = DeltaInsertOp;
@@ -169,9 +172,11 @@ var InsertOpsConverter = (function () {
             new InsertData_1.InsertData(value_types_1.DataType.Image, insertPropVal[value_types_1.DataType.Image])
             : value_types_1.DataType.Video in insertPropVal ?
                 new InsertData_1.InsertData(value_types_1.DataType.Video, insertPropVal[value_types_1.DataType.Video])
-                : value_types_1.DataType.Formula in insertPropVal ?
-                    new InsertData_1.InsertData(value_types_1.DataType.Formula, insertPropVal[value_types_1.DataType.Formula])
-                    : null;
+                : value_types_1.DataType.Mention in insertPropVal ?
+                    new InsertData_1.InsertData(value_types_1.DataType.Mention, insertPropVal[value_types_1.DataType.Mention])
+                    : value_types_1.DataType.Formula in insertPropVal ?
+                        new InsertData_1.InsertData(value_types_1.DataType.Formula, insertPropVal[value_types_1.DataType.Formula])
+                        : null;
     };
     return InsertOpsConverter;
 }());
@@ -190,7 +195,7 @@ var OpAttributeSanitizer = (function () {
         if (!dirtyAttrs || typeof dirtyAttrs !== 'object') {
             return cleanAttrs;
         }
-        var font = dirtyAttrs.font, size = dirtyAttrs.size, link = dirtyAttrs.link, script = dirtyAttrs.script, list = dirtyAttrs.list, header = dirtyAttrs.header, align = dirtyAttrs.align, direction = dirtyAttrs.direction, indent = dirtyAttrs.indent;
+        var font = dirtyAttrs.font, size = dirtyAttrs.size, link = dirtyAttrs.link, script = dirtyAttrs.script, list = dirtyAttrs.list, header = dirtyAttrs.header, align = dirtyAttrs.align, direction = dirtyAttrs.direction, indent = dirtyAttrs.indent, id = dirtyAttrs.id, name = dirtyAttrs.name;
         ['bold', 'italic', 'underline', 'strike', 'code', 'blockquote', 'code-block']
             .forEach(function (prop) {
             var v = dirtyAttrs[prop];
@@ -230,6 +235,12 @@ var OpAttributeSanitizer = (function () {
         }
         if (indent && Number(indent)) {
             cleanAttrs.indent = Math.min(Number(indent), 30);
+        }
+        if (name && String(name)) {
+            cleanAttrs.name = name;
+        }
+        if (id && String(id)) {
+            cleanAttrs.id = id;
         }
         return cleanAttrs;
     };
@@ -940,16 +951,18 @@ var DataType = {
     Image: "image",
     Video: "video",
     Formula: "formula",
-    Text: "text"
+    Text: "text",
+    Mention: "mention"
 };
 exports.DataType = DataType;
 var GroupType = {
     Block: 'block',
     InlineGroup: 'inline-group',
     List: 'list',
-    Video: 'video'
+    Video: 'video',
+    Mention: "mention"
 };
 exports.GroupType = GroupType;
 
 },{}]},{},[7])(7)
-});; window.QuillDeltaToHtmlConverter = window.QuillDeltaToHtmlConverter.QuillDeltaToHtmlConverter; 
+});

@@ -25,12 +25,13 @@ const AlignType = {
     Right: "right" as AlignType
 }
 
-type DataType = "text" | "image" | "video" | "formula";
+type DataType = "text" | "image" | "video" | "formula" | "mention"
 const DataType = {
     Image: "image" as DataType,
     Video: "video" as DataType,
     Formula: "formula" as DataType,
-    Text: "text" as DataType
+    Text: "text" as DataType,
+    Mention: "mention" as DataType
 };
 
 type GroupType = "block" | "inline-group" | "list" | "video";
@@ -38,7 +39,8 @@ const GroupType = {
     Block: 'block' as GroupType,
     InlineGroup: 'inline-group' as GroupType,
     List: 'list' as GroupType,
-    Video: 'video' as GroupType
+    Video: 'video' as GroupType,
+    Mention: "mention" as GroupType
 };
 
 export { NewLine, ListType, ScriptType, DirectionType, AlignType, DataType, GroupType };
