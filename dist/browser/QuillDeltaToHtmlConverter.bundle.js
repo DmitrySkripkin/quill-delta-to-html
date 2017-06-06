@@ -88,7 +88,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var InsertData = (function () {
     function InsertData(type, value) {
         this.type = type;
-        this.value = value + '';
+        if (Object(this.value))
+            this.value = value;
+        else
+            this.value = value + '';
     }
     return InsertData;
 }());
@@ -311,6 +314,9 @@ var OpToHtmlConverter = (function () {
         if (this.op.isContainerBlock()) {
             return '';
         }
+        if (this.op.isMention()) {
+            return this.op.insert.value.name;
+        }
         var content = this.op.isFormula() || this.op.isText() ? this.op.insert.value : '';
         return this.options.encodeHtml && funcs_html_1.encodeHtml(content) || content;
     };
@@ -345,6 +351,9 @@ var OpToHtmlConverter = (function () {
         }
         if (this.op.isVideo()) {
             return tagAttrs.concat(makeAttr('frameborder', '0'), makeAttr('allowfullscreen', 'true'), makeAttr('src', (this.op.insert.value + '')._scrubUrl()));
+        }
+        if (this.op.isMention()) {
+            return tagAttrs.concat(makeAttr('allowfullscreen', 'true'), makeAttr('data-user', (this.op.insert.value.id + '')), makeAttr('data-name', (this.op.insert.value.name + '')));
         }
         var styles = this.getCssStyles();
         var styleAttr = styles.length ? [makeAttr('style', styles.join(';'))] : [];

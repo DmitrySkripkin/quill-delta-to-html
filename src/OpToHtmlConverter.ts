@@ -80,8 +80,10 @@ class OpToHtmlConverter {
         if (this.op.isContainerBlock()) {
             return '';
         }
+        if (this.op.isMention()) {
+            return this.op.insert.value.name;
+        }
         var content = this.op.isFormula() || this.op.isText() ? this.op.insert.value : '';
-        
         return this.options.encodeHtml && encodeHtml(content) || content;
     }
 
@@ -139,8 +141,8 @@ class OpToHtmlConverter {
         if (this.op.isMention()) {
             return tagAttrs.concat(
                 makeAttr('allowfullscreen', 'true'),
-                makeAttr('src', (this.op.insert.value.id + '')._scrubUrl())
-                makeAttr('src', (this.op.insert.value.name + '')._scrubUrl())
+                makeAttr('data-user', (this.op.insert.value.id + '')),
+                makeAttr('data-name', (this.op.insert.value.name + ''))
             );
         }
 
