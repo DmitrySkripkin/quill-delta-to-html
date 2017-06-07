@@ -141,7 +141,8 @@ class OpToHtmlConverter {
         if (this.op.isMention()) {
             return tagAttrs.concat(
                 makeAttr('data-user', (this.op.insert.value.id + '')),
-                makeAttr('data-name', (this.op.insert.value.name + ''))
+                makeAttr('data-name', (this.op.insert.value.name + '')),
+                makeAttr('class', 'mention')
             );
         }
 

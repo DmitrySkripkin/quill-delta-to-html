@@ -356,7 +356,7 @@ var OpToHtmlConverter = (function () {
             return tagAttrs.concat(makeAttr('frameborder', '0'), makeAttr('allowfullscreen', 'true'), makeAttr('src', (this.op.insert.value + '')._scrubUrl()));
         }
         if (this.op.isMention()) {
-            return tagAttrs.concat(makeAttr('data-user', (this.op.insert.value.id + '')), makeAttr('data-name', (this.op.insert.value.name + '')));
+            return tagAttrs.concat(makeAttr('data-user', (this.op.insert.value.id + '')), makeAttr('data-name', (this.op.insert.value.name + '')), makeAttr('class', 'mention'));
         }
         var styles = this.getCssStyles();
         var styleAttr = styles.length ? [makeAttr('style', styles.join(';'))] : [];
