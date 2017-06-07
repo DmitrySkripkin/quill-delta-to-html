@@ -246,7 +246,7 @@ var OpAttributeSanitizer = (function () {
             cleanAttrs.name = name;
         }
         if (user && String(user)) {
-            cleanAttrs.id = user;
+            cleanAttrs.user = user;
         }
         return cleanAttrs;
     };

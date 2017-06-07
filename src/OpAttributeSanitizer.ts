@@ -73,7 +73,7 @@ class OpAttributeSanitizer {
         }
 
         if (user && String(user)) {
-            cleanAttrs.id = user;
+            cleanAttrs.user = user;
         }
 
         return cleanAttrs;
