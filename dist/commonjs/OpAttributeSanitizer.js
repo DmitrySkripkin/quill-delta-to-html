@@ -10,7 +10,7 @@ var OpAttributeSanitizer = (function () {
         if (!dirtyAttrs || typeof dirtyAttrs !== 'object') {
             return cleanAttrs;
         }
-        var font = dirtyAttrs.font, size = dirtyAttrs.size, link = dirtyAttrs.link, script = dirtyAttrs.script, list = dirtyAttrs.list, header = dirtyAttrs.header, align = dirtyAttrs.align, direction = dirtyAttrs.direction, indent = dirtyAttrs.indent, id = dirtyAttrs.id, name = dirtyAttrs.name;
+        var font = dirtyAttrs.font, size = dirtyAttrs.size, link = dirtyAttrs.link, script = dirtyAttrs.script, list = dirtyAttrs.list, header = dirtyAttrs.header, align = dirtyAttrs.align, direction = dirtyAttrs.direction, indent = dirtyAttrs.indent, user = dirtyAttrs.user, name = dirtyAttrs.name;
         ['bold', 'italic', 'underline', 'strike', 'code', 'blockquote', 'code-block']
             .forEach(function (prop) {
             var v = dirtyAttrs[prop];
@@ -54,8 +54,8 @@ var OpAttributeSanitizer = (function () {
         if (name && String(name)) {
             cleanAttrs.name = name;
         }
-        if (id && String(id)) {
-            cleanAttrs.id = id;
+        if (user && String(user)) {
+            cleanAttrs.id = user;
         }
         return cleanAttrs;
     };

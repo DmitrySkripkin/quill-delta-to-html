@@ -103,7 +103,7 @@ class DeltaInsertOp {
     }
 
     isMention() {
-        return !!this.attributes.name && !!this.attributes.id;
+        return !!this.attributes.name && !!this.attributes.user;
     }
 
 }

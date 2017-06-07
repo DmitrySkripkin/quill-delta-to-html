@@ -14,7 +14,7 @@ class OpAttributeSanitizer {
         }
 
         let {
-            font, size, link, script, list, header, align, direction, indent, id, name
+            font, size, link, script, list, header, align, direction, indent, user, name
         } = dirtyAttrs;
 
         ['bold', 'italic', 'underline', 'strike', 'code', 'blockquote', 'code-block']
@@ -72,8 +72,8 @@ class OpAttributeSanitizer {
             cleanAttrs.name = name;
         }
 
-        if (id && String(id)) {
-            cleanAttrs.id = id;
+        if (user && String(user)) {
+            cleanAttrs.id = user;
         }
 
         return cleanAttrs;

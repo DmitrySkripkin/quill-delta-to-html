@@ -23,7 +23,7 @@ interface IOpAttributes {
     align?: AlignType,
     direction?: DirectionType,
     indent?: number,
-    id?: string,
+    user?: string,
     name?: string
 }
 

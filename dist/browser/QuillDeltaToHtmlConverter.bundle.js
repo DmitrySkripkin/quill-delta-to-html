@@ -76,7 +76,7 @@ var DeltaInsertOp = (function () {
         return this.isText() && !!this.attributes.link;
     };
     DeltaInsertOp.prototype.isMention = function () {
-        return !!this.attributes.name && !!this.attributes.id;
+        return !!this.attributes.name && !!this.attributes.user;
     };
     return DeltaInsertOp;
 }());
@@ -201,7 +201,7 @@ var OpAttributeSanitizer = (function () {
         if (!dirtyAttrs || typeof dirtyAttrs !== 'object') {
             return cleanAttrs;
         }
-        var font = dirtyAttrs.font, size = dirtyAttrs.size, link = dirtyAttrs.link, script = dirtyAttrs.script, list = dirtyAttrs.list, header = dirtyAttrs.header, align = dirtyAttrs.align, direction = dirtyAttrs.direction, indent = dirtyAttrs.indent, id = dirtyAttrs.id, name = dirtyAttrs.name;
+        var font = dirtyAttrs.font, size = dirtyAttrs.size, link = dirtyAttrs.link, script = dirtyAttrs.script, list = dirtyAttrs.list, header = dirtyAttrs.header, align = dirtyAttrs.align, direction = dirtyAttrs.direction, indent = dirtyAttrs.indent, user = dirtyAttrs.user, name = dirtyAttrs.name;
         ['bold', 'italic', 'underline', 'strike', 'code', 'blockquote', 'code-block']
             .forEach(function (prop) {
             var v = dirtyAttrs[prop];
@@ -245,8 +245,8 @@ var OpAttributeSanitizer = (function () {
         if (name && String(name)) {
             cleanAttrs.name = name;
         }
-        if (id && String(id)) {
-            cleanAttrs.id = id;
+        if (user && String(user)) {
+            cleanAttrs.id = user;
         }
         return cleanAttrs;
     };
@@ -356,7 +356,7 @@ var OpToHtmlConverter = (function () {
             return tagAttrs.concat(makeAttr('frameborder', '0'), makeAttr('allowfullscreen', 'true'), makeAttr('src', (this.op.insert.value + '')._scrubUrl()));
         }
         if (this.op.isMention()) {
-            return tagAttrs.concat(makeAttr('data-user', (this.op.insert.value.id + '')), makeAttr('data-name', (this.op.insert.value.name + '')), makeAttr('class', 'mention'));
+            return tagAttrs.concat(makeAttr('data-user', (this.op.insert.value.user + '')), makeAttr('data-name', (this.op.insert.value.name + '')), makeAttr('class', 'mention'));
         }
         var styles = this.getCssStyles();
         var styleAttr = styles.length ? [makeAttr('style', styles.join(';'))] : [];
