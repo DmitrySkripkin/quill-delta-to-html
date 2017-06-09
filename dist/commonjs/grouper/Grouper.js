@@ -43,6 +43,7 @@ var Grouper = (function () {
             if (!(g instanceof group_types_1.BlockGroup) || !(gPrev instanceof group_types_1.BlockGroup)) {
                 return false;
             }
+            console.log(blocksOf.codeBlocks && Grouper.areBothCodeblocks(g, gPrev));
             return blocksOf.codeBlocks && Grouper.areBothCodeblocks(g, gPrev)
                 || blocksOf.blockquotes && Grouper.areBothBlockquotesWithSameAdi(g, gPrev)
                 || blocksOf.header && Grouper.areBothSameHeadersWithSameAdi(g, gPrev);

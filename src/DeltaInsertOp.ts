@@ -106,6 +106,10 @@ class DeltaInsertOp {
         return !!this.attributes.name && !!this.attributes.user;
     }
 
+    isFile() {
+        return !!this.attributes.url && !!this.attributes.filename;
+    }
+
 }
 
 export { DeltaInsertOp }; 

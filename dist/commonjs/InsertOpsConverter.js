@@ -27,6 +27,9 @@ var InsertOpsConverter = (function () {
             if (!op.attributes && op.insert.mention) {
                 op.attributes = op.insert.mention.attributes;
             }
+            if (!op.attributes && op.insert.file) {
+                op.attributes = op.insert.file.attributes;
+            }
             attributes = OpAttributeSanitizer_1.OpAttributeSanitizer.sanitize(op.attributes);
             results.push(new DeltaInsertOp_1.DeltaInsertOp(insertVal, attributes));
         }
@@ -45,9 +48,11 @@ var InsertOpsConverter = (function () {
                 new InsertData_1.InsertData(value_types_1.DataType.Video, insertPropVal[value_types_1.DataType.Video])
                 : value_types_1.DataType.Mention in insertPropVal ?
                     new InsertData_1.InsertData(value_types_1.DataType.Mention, insertPropVal[value_types_1.DataType.Mention])
-                    : value_types_1.DataType.Formula in insertPropVal ?
-                        new InsertData_1.InsertData(value_types_1.DataType.Formula, insertPropVal[value_types_1.DataType.Formula])
-                        : null;
+                    : value_types_1.DataType.Image in insertPropVal ?
+                        new InsertData_1.InsertData(value_types_1.DataType.Image, insertPropVal[value_types_1.DataType.Image])
+                        : value_types_1.DataType.Formula in insertPropVal ?
+                            new InsertData_1.InsertData(value_types_1.DataType.Formula, insertPropVal[value_types_1.DataType.Formula])
+                            : null;
     };
     return InsertOpsConverter;
 }());

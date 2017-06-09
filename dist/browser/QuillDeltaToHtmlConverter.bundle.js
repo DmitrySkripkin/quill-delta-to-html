@@ -78,6 +78,9 @@ var DeltaInsertOp = (function () {
     DeltaInsertOp.prototype.isMention = function () {
         return !!this.attributes.name && !!this.attributes.user;
     };
+    DeltaInsertOp.prototype.isFile = function () {
+        return !!this.attributes.url && !!this.attributes.filename;
+    };
     return DeltaInsertOp;
 }());
 exports.DeltaInsertOp = DeltaInsertOp;
@@ -162,6 +165,9 @@ var InsertOpsConverter = (function () {
             if (!op.attributes && op.insert.mention) {
                 op.attributes = op.insert.mention.attributes;
             }
+            if (!op.attributes && op.insert.file) {
+                op.attributes = op.insert.file.attributes;
+            }
             attributes = OpAttributeSanitizer_1.OpAttributeSanitizer.sanitize(op.attributes);
             results.push(new DeltaInsertOp_1.DeltaInsertOp(insertVal, attributes));
         }
@@ -180,9 +186,11 @@ var InsertOpsConverter = (function () {
                 new InsertData_1.InsertData(value_types_1.DataType.Video, insertPropVal[value_types_1.DataType.Video])
                 : value_types_1.DataType.Mention in insertPropVal ?
                     new InsertData_1.InsertData(value_types_1.DataType.Mention, insertPropVal[value_types_1.DataType.Mention])
-                    : value_types_1.DataType.Formula in insertPropVal ?
-                        new InsertData_1.InsertData(value_types_1.DataType.Formula, insertPropVal[value_types_1.DataType.Formula])
-                        : null;
+                    : value_types_1.DataType.Image in insertPropVal ?
+                        new InsertData_1.InsertData(value_types_1.DataType.Image, insertPropVal[value_types_1.DataType.Image])
+                        : value_types_1.DataType.Formula in insertPropVal ?
+                            new InsertData_1.InsertData(value_types_1.DataType.Formula, insertPropVal[value_types_1.DataType.Formula])
+                            : null;
     };
     return InsertOpsConverter;
 }());
@@ -317,8 +325,11 @@ var OpToHtmlConverter = (function () {
         if (this.op.isContainerBlock()) {
             return '';
         }
-        if (this.op.isMention()) {
+        else if (this.op.isMention()) {
             return this.op.insert.value.name;
+        }
+        else if (this.op.isFile()) {
+            return this.op.insert.value.url;
         }
         var content = this.op.isFormula() || this.op.isText() ? this.op.insert.value : '';
         return this.options.encodeHtml && funcs_html_1.encodeHtml(content) || content;
@@ -357,6 +368,9 @@ var OpToHtmlConverter = (function () {
         }
         if (this.op.isMention()) {
             return tagAttrs.concat(makeAttr('data-user', (this.op.insert.value.user + '')), makeAttr('data-name', (this.op.insert.value.name + '')), makeAttr('class', 'mention'));
+        }
+        if (this.op.isFile()) {
+            return tagAttrs.concat(makeAttr('data-url', (this.op.insert.value.url + '')), makeAttr('data-filename', (this.op.insert.value.filename + '')), makeAttr('class', 'file'));
         }
         var styles = this.getCssStyles();
         var styleAttr = styles.length ? [makeAttr('style', styles.join(';'))] : [];
@@ -641,10 +655,11 @@ String.prototype._tokenizeWithNewLines = function () {
         return lines;
     }
     var lastIndex = lines.length - 1;
-    return lines.reduce(function (pv, line, ind) {
+    console.log(lines);
+    var result = lines.reduce(function (pv, line, ind) {
         if (ind !== lastIndex) {
             if (line !== "") {
-                pv = pv.concat(line, NewLine);
+                pv.push(line);
             }
             else {
                 pv.push(NewLine);
@@ -655,6 +670,8 @@ String.prototype._tokenizeWithNewLines = function () {
         }
         return pv;
     }, []);
+    console.log(result);
+    return result;
 };
 String.prototype._scrubUrl = function () {
     return this.replace(/[^-A-Za-z0-9+&@#/%?=~_|!:,.;\(\)]/g, '');
@@ -758,6 +775,7 @@ var Grouper = (function () {
             if (!(g instanceof group_types_1.BlockGroup) || !(gPrev instanceof group_types_1.BlockGroup)) {
                 return false;
             }
+            console.log(blocksOf.codeBlocks && Grouper.areBothCodeblocks(g, gPrev));
             return blocksOf.codeBlocks && Grouper.areBothCodeblocks(g, gPrev)
                 || blocksOf.blockquotes && Grouper.areBothBlockquotesWithSameAdi(g, gPrev)
                 || blocksOf.header && Grouper.areBothSameHeadersWithSameAdi(g, gPrev);
@@ -964,7 +982,8 @@ var DataType = {
     Video: "video",
     Formula: "formula",
     Text: "text",
-    Mention: "mention"
+    Mention: "mention",
+    File: "file"
 };
 exports.DataType = DataType;
 var GroupType = {
@@ -972,7 +991,8 @@ var GroupType = {
     InlineGroup: 'inline-group',
     List: 'list',
     Video: 'video',
-    Mention: "mention"
+    Mention: "mention",
+    File: "file"
 };
 exports.GroupType = GroupType;
 

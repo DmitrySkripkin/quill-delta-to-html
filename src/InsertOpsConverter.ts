@@ -34,6 +34,9 @@ class InsertOpsConverter {
             if (!op.attributes && op.insert.mention) {
                 op.attributes = op.insert.mention.attributes;
             }
+            if (!op.attributes && op.insert.file) {
+                op.attributes = op.insert.file.attributes;
+            }
             attributes =  OpAttributeSanitizer.sanitize(op.attributes);
             
             results.push(new DeltaInsertOp(insertVal, attributes));
@@ -56,9 +59,11 @@ class InsertOpsConverter {
                 new InsertData(DataType.Video, insertPropVal[DataType.Video])
                     : DataType.Mention in insertPropVal ?
                     new InsertData(DataType.Mention, insertPropVal[DataType.Mention])
-                        : DataType.Formula in insertPropVal ?
-                                new InsertData(DataType.Formula, insertPropVal[DataType.Formula])
-                                : null;
+                        : DataType.Image in insertPropVal ?
+                        new InsertData(DataType.Image, insertPropVal[DataType.Image])
+                            : DataType.Formula in insertPropVal ?
+                                    new InsertData(DataType.Formula, insertPropVal[DataType.Formula])
+                                    : null;
     }
 }
 

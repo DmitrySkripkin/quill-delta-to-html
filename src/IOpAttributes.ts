@@ -24,7 +24,19 @@ interface IOpAttributes {
     direction?: DirectionType,
     indent?: number,
     user?: string,
-    name?: string
+    name?: string,
+
+    url?: string,
+    filename?: string,
+    hash?: string,
+    preview?: string,
+    type?: string,
+    extension?: string,
+    // size?: string,
+    width?: string,
+    height?: string,
+
+
 }
 
 export { IOpAttributes };

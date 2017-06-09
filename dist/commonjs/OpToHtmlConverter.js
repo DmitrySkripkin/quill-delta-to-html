@@ -51,8 +51,11 @@ var OpToHtmlConverter = (function () {
         if (this.op.isContainerBlock()) {
             return '';
         }
-        if (this.op.isMention()) {
+        else if (this.op.isMention()) {
             return this.op.insert.value.name;
+        }
+        else if (this.op.isFile()) {
+            return this.op.insert.value.url;
         }
         var content = this.op.isFormula() || this.op.isText() ? this.op.insert.value : '';
         return this.options.encodeHtml && funcs_html_1.encodeHtml(content) || content;
@@ -91,6 +94,9 @@ var OpToHtmlConverter = (function () {
         }
         if (this.op.isMention()) {
             return tagAttrs.concat(makeAttr('data-user', (this.op.insert.value.user + '')), makeAttr('data-name', (this.op.insert.value.name + '')), makeAttr('class', 'mention'));
+        }
+        if (this.op.isFile()) {
+            return tagAttrs.concat(makeAttr('data-url', (this.op.insert.value.url + '')), makeAttr('data-filename', (this.op.insert.value.filename + '')), makeAttr('class', 'file'));
         }
         var styles = this.getCssStyles();
         var styleAttr = styles.length ? [makeAttr('style', styles.join(';'))] : [];

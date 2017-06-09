@@ -54,7 +54,7 @@ class Grouper {
             if (!(g instanceof BlockGroup) || !(gPrev instanceof BlockGroup)) {
                 return false;
             }
-
+            console.log( blocksOf.codeBlocks && Grouper.areBothCodeblocks(g, gPrev))
             return blocksOf.codeBlocks && Grouper.areBothCodeblocks(g, gPrev)
                 || blocksOf.blockquotes && Grouper.areBothBlockquotesWithSameAdi(g, gPrev)
                 || blocksOf.header && Grouper.areBothSameHeadersWithSameAdi(g, gPrev);
@@ -65,7 +65,6 @@ class Grouper {
     // and discards the rest. 
     static reduceConsecutiveSameStyleBlocksToOne(
         groups: Array<TDataGroup | BlockGroup[]>): TDataGroup[] {
-
         var newLineOp = DeltaInsertOp.createNewLineOp();
         return groups.map(function (elm: TDataGroup | BlockGroup[]) {
             if (!Array.isArray(elm)) {

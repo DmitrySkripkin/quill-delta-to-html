@@ -26,12 +26,12 @@ String.prototype._tokenizeWithNewLines = function() {
     }
 
     var lastIndex = lines.length - 1;
-
-    return lines.reduce((pv: string[], line: string, ind: number) => {
+    console.log(lines)
+    var result =  lines.reduce((pv: string[], line: string, ind: number) => {
 
         if (ind !== lastIndex) {
             if (line !== "") {
-                pv = pv.concat(line, NewLine);
+                pv.push(line);
             } else {
                 pv.push(NewLine);
             }
@@ -40,6 +40,8 @@ String.prototype._tokenizeWithNewLines = function() {
         }
         return pv;
     }, []);
+    console.log(result)
+    return result;
 };
 
 String.prototype._scrubUrl = function() {

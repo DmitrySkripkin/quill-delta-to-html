@@ -177,7 +177,6 @@ class QuillDeltaToHtmlConverter {
     }
 
     renderInlines(ops: DeltaInsertOp[], wrapInParagraphTag = true) {
-        
         var nlRx = /\n/g;
         var pStart = wrapInParagraphTag ? makeStartTag(this.options.paragraphTag) : '';
         var pEnd = wrapInParagraphTag ? makeEndTag(this.options.paragraphTag) : '';

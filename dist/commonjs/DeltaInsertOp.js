@@ -77,6 +77,9 @@ var DeltaInsertOp = (function () {
     DeltaInsertOp.prototype.isMention = function () {
         return !!this.attributes.name && !!this.attributes.user;
     };
+    DeltaInsertOp.prototype.isFile = function () {
+        return !!this.attributes.url && !!this.attributes.filename;
+    };
     return DeltaInsertOp;
 }());
 exports.DeltaInsertOp = DeltaInsertOp;

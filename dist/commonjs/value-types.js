@@ -26,7 +26,8 @@ var DataType = {
     Video: "video",
     Formula: "formula",
     Text: "text",
-    Mention: "mention"
+    Mention: "mention",
+    File: "file"
 };
 exports.DataType = DataType;
 var GroupType = {
@@ -34,6 +35,7 @@ var GroupType = {
     InlineGroup: 'inline-group',
     List: 'list',
     Video: 'video',
-    Mention: "mention"
+    Mention: "mention",
+    File: "file"
 };
 exports.GroupType = GroupType;

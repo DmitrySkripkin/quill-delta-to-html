@@ -332,7 +332,7 @@
         quill.on('text-change', function (v) {
             var delta = quill.getContents();
             console.log(delta.ops);
-            var qdc = new window.QuillDeltaToHtmlConverter(delta.ops, window.opts_ || {});
+            var qdc = new window.QuillDeltaToHtmlConverter.QuillDeltaToHtmlConverter(delta.ops, window.opts_ || {});
             var html = qdc.convert();
             console.log(html);
             document.getElementById('converted-view').innerHTML = html;
